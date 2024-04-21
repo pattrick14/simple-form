@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 6900; // Using the PORT variable
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
+app.use(cors());
 
 const connectToDb = require('./db');
 
