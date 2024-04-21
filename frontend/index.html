@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<style>
+    .mainsection {
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .left {
+
+        width: 50vh;
+        height: 100vh;
+        justify-content: center;
+
+    }
+
+    .right {
+
+
+        width: 50vh;
+        height: 100vh;
+        justify-content: center;
+        margin-left: 50px;
+        margin-right: 0px;
+    }
+</style>
+
+<body class="bg-gray-100 mainsection">
+
+    <div class="left">
+
+        <div class="container mx-auto mt-8">
+            <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-2xl font-bold mb-4">Feedback Form</h2>
+                <form>
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
+                        <input type="text" id="nameI" name="name"
+                            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                            placeholder="Enter your name">
+                    </div>
+                    <div class="mb-4">
+                        <label for="comment" class="block text-gray-700 font-semibold mb-2">Comment</label>
+                        <textarea id="commentI" name="comment"
+                            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                            placeholder="Enter your comment"></textarea>
+                    </div>
+                    <button id="submitBtn" type="submit"
+                        class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="commentSection" class="right">
+
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center mb-4">
+
+                <div class="ml-3">
+                    <h2 class="text-lg font-semibold text-gray-800">John Doe</h2>
+                </div>
+            </div>
+            <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel
+                condimentum velit. Proin nec risus ut magna tristique vestibulum at nec velit. Curabitur at velit
+                tincidunt, aliquet justo id, vehicula libero.</p>
+
+        </div>
+
+
+
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+    <script>
+
+       
+    
+
+        const addComment = async () => {
+
+            const comment = document.getElementById('commentI').innerText;  //bagun ghe ithun
+            const name = document.getElementById('nameI').innerText;
+
+            const formData = {
+
+                name: name,
+                comment: comment
+            };
+
+            // Assuming the URL where you want to send the form data
+            const url = 'http://localhost:6900/details';
+
+            // Send form data using Axios PUT request
+            axios.post(url, formData)
+                .then(response => {
+                    console.log('Form data sent successfully:', response.data);
+                    alert('Form data sent successfully');
+                })
+                .catch(error => {
+                    console.error('Error sending form data:', error);
+                    alert('unable to send form data:', error);
+                });
+
+        }
+        const getComments = async () => {
+    try {
+        const response = await axios.get('http://localhost:6900/comments');
+        if (response.data.length > 0) {
+
+          
+
+            // Clear existing comments
+            document.getElementById('commentSection').innerHTML = '';
+
+            // Loop through each comment in the response and create HTML elements for them
+            response.data.forEach(comment => {
+                console.log("runned");
+                const newComment = document.createElement('div');
+                newComment.className = 'max-w-lg mx-auto bg-white rounded-lg shadow-md p-6 mb-4';
+                newComment.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <div class="ml-3">
+                            <h2 class="text-lg font-semibold text-gray-800">${comment.username}</h2>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 text-base">${comment.comment}</p>
+                `;
+                document.getElementById('commentSection').appendChild(newComment);
+            });
+        } else {
+            console.log('No comments available');
+        }
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+    }
+};
+
+        getComments();
+
+
+
+        document.getElementById('submitBtn').addEventListener('click', addComment());
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+
+
+</html>

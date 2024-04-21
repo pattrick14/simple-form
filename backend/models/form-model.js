@@ -1,13 +1,10 @@
 const mongoose = require('mongoose');
 
 const formSchema = new mongoose.Schema({
-
     name: String,
-    Comment:String
-
+    comment: String // Changed field name to lowercase
 });
 
-const formModel = new mongoose.Model("form",formSchema);
+const Form = mongoose.model("Form", formSchema); // Changed model name to PascalCase
 
-
-module.exports = formModel;
+module.exports = Form;
