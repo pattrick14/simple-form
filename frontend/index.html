@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Form</title>
+    <link rel="stylesheet" href="style.css">
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <style>
     .mainsection {
-
         display: flex;
         justify-content: space-between;
     }
 
     .left {
-
         width: 50vh;
         height: 100vh;
         justify-content: center;
-
     }
 
     .right {
-
-
         width: 50vh;
         height: 100vh;
         justify-content: center;
@@ -36,65 +31,36 @@
 </style>
 
 <body class="bg-gray-100 mainsection">
+    <div class="container">
+        <div class="feedback-form">
+            <h2 class="form-title">Feedback Form</h2>
+            <div class="input-group">
+                <label for="nameI">Name:</label>
+                <input id="nameI" placeholder="Enter your name" type="text">
+            </div>
+            <div class="input-group">
+                <label for="commentI">Comment:</label>
+                <textarea id="commentI" rows="4" placeholder="Enter your comment"></textarea>
+            </div>
+            <button class="submit-btn" onclick="addComment()">Submit</button>
+        </div>
+        <strong><h1 class="comment-author"> Comments:</h1> </strong>
 
-    <div class="left">
-
-        <div class="container mx-auto mt-8">
-            <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-8">
-                <h2 class="text-2xl font-bold mb-4">Feedback Form</h2>
-                <input id="nameI" placeholder="enter name" type="text" value=""/>
-                <textarea id="commentI" rows="4" cols="50" placeholder="enter comment">
-                    
-                  </textarea>
-                  <button onclick="addComment()">submit</button>
-
-                  
+        <div id="commentSection" class="comment-section">
+            <div class="comment">
+                <h3 class="comment-author">John Doe</h3>
+                <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel condimentum velit. Proin nec risus ut magna tristique vestibulum at nec velit. Curabitur at velit tincidunt, aliquet justo id, vehicula libero.</p>
             </div>
         </div>
-    </div>
-
-
-    <div id="commentSection" class="right">
-
-        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
-            <div class="flex items-center mb-4">
-
-                <div class="ml-3">
-                    <h2 class="text-lg font-semibold text-gray-800">John Doe</h2>
-                </div>
-            </div>
-            <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel
-                condimentum velit. Proin nec risus ut magna tristique vestibulum at nec velit. Curabitur at velit
-                tincidunt, aliquet justo id, vehicula libero.</p>
-
-        </div>
-
-
-
-
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-
     <script>
-
-       
-    
-
        async  function addComment() {
-
         const commentdata = document.getElementById('commentI');
         const namedata = document.getElementById('nameI');
-
-       
-       
-
-
-
             const formData = {
-
                 name: namedata.value,
                 comment: commentdata.value
             };
@@ -106,7 +72,7 @@
             axios.post(url, formData)
                 .then(response => {
                     console.log('Form data sent successfully:', response.data);
-                    alert('Form data sent successfully');
+                    // alert('Form data sent successfully');
                     document.getElementById('commentSection').innerHTML = '';
                     getComments();
                 })
@@ -121,8 +87,6 @@
         const response = await axios.get('http://localhost:6900/comments');
         if (response.data.length > 0) {
 
-          
-
             // Clear existing comments
             document.getElementById('commentSection').innerHTML = '';
 
@@ -130,7 +94,7 @@
             response.data.forEach(comment => {
                 console.log("runned");
                 const newComment = document.createElement('div');
-                newComment.className = 'max-w-lg mx-auto bg-white rounded-lg shadow-md p-6 mb-4';
+                newComment.className = 'max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6 mb-4';
                 newComment.innerHTML = `
                     <div class="flex items-center mb-4">
                         <div class="ml-3">
@@ -150,24 +114,9 @@
 };
 
         getComments();
-
-
-
         document.getElementById('submitBtn').addEventListener('click', addComment());
-
-
-
-
-
-
-
-
 
     </script>
 
-
-
 </body>
-
-
 </html>
